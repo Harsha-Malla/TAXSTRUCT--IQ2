@@ -1,0 +1,794 @@
+/* ═══════════════════════════════════════════════════
+   TAXSTRUCT IQ — DESIGN SYSTEM
+   Big 4 Internal Tool Aesthetic · FY 2025-26
+════════════════════════════════════════════════════ */
+
+/* ── CSS Variables (Design Tokens) ── */
+:root {
+    --bg-primary:      #0D1117;
+    --bg-secondary:    #161B22;
+    --bg-card:         #1C2128;
+    --accent:          #2D9CDB;
+    --accent-hover:    #1A7BB8;
+    --success:         #27AE60;
+    --warning:         #F2994A;
+    --critical:        #EB5757;
+    --text-primary:    #E6EDF3;
+    --text-secondary:  #8B949E;
+    --border:          #30363D;
+    --font-body:       'Inter', sans-serif;
+    --font-mono:       'IBM Plex Mono', monospace;
+  }
+  /* ═══════════════════════════════════════════════════
+   LIGHT THEME — overrides CSS variables
+   Applied when <body> has class "theme-light"
+════════════════════════════════════════════════════ */
+
+body.theme-light {
+  --bg-primary:      #F5F7FA;
+  --bg-secondary:    #FFFFFF;
+  --bg-card:         #EEF1F6;
+  --accent:          #1A6FAB;
+  --accent-hover:    #155D8E;
+  --success:         #1A7A45;
+  --warning:         #B06A00;
+  --critical:        #C0392B;
+  --text-primary:    #0D1117;
+  --text-secondary:  #4A5568;
+  --border:          #CBD5E0;
+}
+
+/* Light theme specific overrides */
+body.theme-light .app-header {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+body.theme-light .field-input {
+  background: #FFFFFF;
+  color: #0D1117;
+}
+
+body.theme-light select.field-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #FFFFFF;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234A5568' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+body.theme-light .field-input option {
+  background: #FFFFFF;
+  color: #0D1117;
+}
+
+body.theme-light .output-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+body.theme-light .data-table tr:hover td {
+  background: rgba(0,0,0,0.02);
+}
+
+body.theme-light .toast {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+body.theme-light .compute-btn {
+  box-shadow: 0 2px 4px rgba(26,111,171,0.3);
+}
+
+/* Smooth theme transition — all elements animate */
+*, *::before, *::after {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+  
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html, body {
+    height: 100%;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  /* ── Sticky Header ── */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  
+  .version-badge, .jurisdiction-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    font-family: var(--font-mono);
+  }
+  
+  .version-badge {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  
+  .jurisdiction-badge {
+    background: rgba(45, 156, 219, 0.12);
+    color: var(--accent);
+    border: 1px solid rgba(45, 156, 219, 0.3);
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .deal-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+  
+  .deal-name-input {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 5px 12px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    width: 220px;
+    transition: border-color 0.2s;
+  }
+  
+  .deal-name-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  
+  /* ── Tab Navigation ── */
+  .tab-bar {
+    display: flex;
+    gap: 2px;
+    padding: 8px 24px 0;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  
+  .tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  
+  .tab:hover { color: var(--text-primary); }
+  
+  .tab.active {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+  
+  /* ── Three-Panel Layout ── */
+  .app-body {
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    gap: 0;
+    height: calc(100vh - 97px);
+    overflow: hidden;
+  }
+  
+  .panel {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    overflow: hidden;
+  }
+  
+  .panel:last-child { border-right: none; }
+  
+  .panel-header {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  
+  .panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: var(--bg-primary);
+  }
+  
+  /* Custom scrollbar */
+  .panel-body::-webkit-scrollbar { width: 6px; }
+  .panel-body::-webkit-scrollbar-track { background: transparent; }
+  .panel-body::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+  
+  /* ── Placeholder Text ── */
+  .placeholder-text {
+    color: var(--text-secondary);
+    font-size: 13px;
+    text-align: center;
+    margin-top: 40px;
+    line-height: 2;
+  }
+  
+  /* ── Risk Badge Chips ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .badge-low      { background: rgba(39,174,96,0.15);  color: var(--success);  border: 1px solid rgba(39,174,96,0.3); }
+  .badge-medium   { background: rgba(242,153,74,0.15); color: var(--warning);  border: 1px solid rgba(242,153,74,0.3); }
+  .badge-high     { background: rgba(235,87,87,0.15);  color: var(--critical); border: 1px solid rgba(235,87,87,0.3); }
+  .badge-critical { background: var(--critical);       color: #fff; }
+  .badge-info     { background: rgba(45,156,219,0.15); color: var(--accent);   border: 1px solid rgba(45,156,219,0.3); }
+  
+  /* ── Data Tables ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  
+  .data-table th {
+    text-align: left;
+    padding: 8px 12px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+    color: var(--text-primary);
+  }
+  
+  .data-table td.mono {
+    font-family: var(--font-mono);
+    text-align: right;
+  }
+  
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr.total-row td {
+    border-top: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--accent);
+  }
+  
+  /* ── Cards / Output Panels ── */
+  .output-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  
+  .output-card-header {
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  
+  .output-card-body {
+    padding: 16px;
+  }
+  
+  /* ── Toast Notifications ── */
+  .toast-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .toast {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--warning);
+    border-radius: 6px;
+    padding: 12px 16px;
+    min-width: 280px;
+    max-width: 380px;
+    font-size: 13px;
+    color: var(--text-primary);
+    animation: slideIn 0.2s ease;
+  }
+  
+  .toast.error { border-left-color: var(--critical); }
+  .toast.success { border-left-color: var(--success); }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  
+  /* ── Number animation on update ── */
+  .animating {
+    transition: color 0.3s ease;
+    color: var(--accent) !important;
+  }
+  /* ═══════════════════════════════════════════════════
+   MODULE 1 — INPUT ENGINE STYLES
+════════════════════════════════════════════════════ */
+
+.input-section {
+    margin-bottom: 24px;
+  }
+  
+  .input-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  
+  .input-field-wrapper {
+    margin-bottom: 16px;
+  }
+  
+  .field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    letter-spacing: 0.3px;
+  }
+  
+  .required-star {
+    color: var(--critical);
+    margin-left: 3px;
+  }
+  
+  .field-input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 8px 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  
+  .field-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  .field-input.input-error {
+    border-color: var(--critical);
+  }
+  
+  .field-help {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  
+  .field-error {
+    font-size: 11px;
+    color: var(--critical);
+    margin-top: 4px;
+    display: none;
+  }
+  
+  /* Checkbox styling */
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--accent);
+  }
+  
+  /* Select dropdown arrow */
+  select.field-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238B949E' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    cursor: pointer;
+  }
+  
+  select.field-input option {
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+  /* ── Compute Button ── */
+.compute-bar {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-secondary);
+    position: sticky;
+    bottom: 0;
+  }
+  
+  .compute-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  
+  .compute-btn:hover { background: var(--accent-hover); }
+/* ═══════════════════════════════════════════════════
+   MODULE 6 — RISK REGISTER STYLES
+════════════════════════════════════════════════════ */
+
+.risk-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.risk-item:last-child { border-bottom: none; }
+
+.risk-not-triggered {
+  opacity: 0.45;
+}
+
+.risk-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.risk-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.risk-section {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.risk-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-left: 4px;
+}
+/* ═══════════════════════════════════════════════════
+   MODULE 7 — ADVISORY MEMO STYLES
+════════════════════════════════════════════════════ */
+
+.memo-header {
+  padding: 16px;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 16px;
+}
+
+.memo-logo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.memo-meta { display: flex; flex-direction: column; gap: 4px; }
+
+.memo-meta-row {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.memo-meta-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  min-width: 80px;
+  font-family: var(--font-mono);
+}
+
+.memo-meta-value {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.memo-section {
+  margin-bottom: 20px;
+  padding: 0 16px;
+}
+
+.memo-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.memo-section p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+
+.memo-section p strong {
+  color: var(--text-primary);
+}
+
+.memo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin: 8px 0;
+}
+
+.memo-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(48,54,61,0.5);
+  color: var(--text-secondary);
+}
+
+.memo-table td:last-child {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.memo-table tr.memo-total td {
+  font-weight: 600;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border);
+}
+
+.memo-list {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  padding-left: 16px;
+}
+
+.memo-list li { margin-bottom: 6px; }
+
+.memo-list li strong { color: var(--text-primary); }
+
+.memo-disclaimer {
+  font-size: 10px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+  line-height: 1.7;
+  opacity: 0.7;
+  margin-top: 16px;
+}
+/* ═══════════════════════════════════════════════════
+   MODULE 8 — TIMELINE STYLES
+════════════════════════════════════════════════════ */
+
+.timeline-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-stat-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.timeline-stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+
+.timeline-container {
+  padding: 8px 16px;
+}
+
+.timeline-event {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+
+.timeline-event:last-child { border-bottom: none; }
+
+.timeline-event-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.timeline-event-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.timeline-event-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timeline-event-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.timeline-event-type {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.timeline-event-label {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.timeline-event-amount {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.timeline-event-section {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.timeline-event-consequence {
+  font-size: 11px;
+  color: var(--warning);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+/* ═══════════════════════════════════════════════════
+   ENHANCEMENT 1 — REAL-TIME COMPUTATION STYLES
+════════════════════════════════════════════════════ */
+
+/* Pulse indicator shown in panel header during live updates */
+.panel-header.computing::after {
+  content: ' ●';
+  color: var(--accent);
+  font-size: 8px;
+  animation: pulse 0.6s ease infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.3; }
+  to   { opacity: 1.0; }
+}
+
+/* Smooth number transitions */
+.mono {
+  transition: color 0.25s ease;
+}
+
+.animating {
+  color: var(--accent) !important;
+}
+
+/* Live badge in results panel header */
+.live-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(39,174,96,0.15);
+  color: var(--success);
+  border: 1px solid rgba(39,174,96,0.3);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+  vertical-align: middle;
+}

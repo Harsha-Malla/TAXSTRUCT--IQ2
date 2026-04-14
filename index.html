@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaxStruct IQ — M&A Tax Intelligence Platform (India) v2.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+ <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- STICKY HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="logo">TaxStruct IQ</span>
+      <span class="version-badge">v2.0</span>
+      <span class="jurisdiction-badge">India · FY 2025–26 · AY 2026–27</span>
+    </div>
+    <div class="header-right">
+      <span class="deal-label">Deal:</span>
+      <input
+        type="text"
+        id="dealName"
+        class="deal-name-input"
+        placeholder="Enter deal name..."
+        maxlength="60"
+      />
+      <span class="header-date" id="headerDate"></span>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        title="Switch theme"
+        style="
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          color: var(--text-primary);
+          padding: 6px 12px;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          margin-left: 8px;
+        ">
+        ☀️
+      </button>
+    </div>
+  </header>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-bar">
+    <button class="tab active" data-tab="compute">Compute</button>
+    <button class="tab" data-tab="buyer">Buyer View</button>
+    <button class="tab" data-tab="bridge">Bridge</button>
+    <button class="tab" data-tab="compare">Compare</button>
+    <button class="tab" data-tab="scenarios">Scenarios</button>
+    <button class="tab" data-tab="warranty">Warranty</button>
+    <button class="tab" data-tab="holdco">SPV / Holdco</button>
+    <button class="tab" data-tab="timeline">Timeline</button>
+    <button class="tab" data-tab="risk">Risk</button>
+    <button class="tab" data-tab="advisory">Advisory</button>
+    <button class="tab" data-tab="export">Export</button>
+  </nav>
+
+  <!-- MAIN THREE-PANEL LAYOUT -->
+  <main class="app-body">
+
+    <!-- LEFT: Input Panel -->
+    <section class="panel panel-input" id="inputPanel">
+      <div class="panel-header">
+     Tax Analysis
+     <span class="live-badge">LIVE</span>
+     </div>
+      <div class="panel-body" id="inputPanelBody">
+        <p class="placeholder-text">Input module loading...</p>
+      </div>
+      <!-- COMPUTE BUTTONS -->
+      <div class="compute-bar">
+        <button class="compute-btn" onclick="runComputation()">
+          ▶ Compute Tax Analysis
+        </button>
+        <button class="compute-btn"
+          onclick="runBuyerComputation()"
+          style="margin-top:8px; background:var(--bg-card);
+                 border:1px solid var(--accent); color:var(--accent);">
+          ◈ Add Buyer Perspective
+        </button>
+      </div>
+    </section>
+
+    <!-- CENTRE: Results Panel -->
+    <section class="panel panel-results" id="resultsPanel">
+      <div class="panel-header">Tax Analysis</div>
+      <div class="panel-body" id="resultsPanelBody">
+        <p class="placeholder-text">Enter deal inputs to generate analysis.</p>
+      </div>
+    </section>
+
+    <!-- RIGHT: Advisory Panel -->
+    <section class="panel panel-advisory" id="advisoryPanel">
+      <div class="panel-header">Advisory Memo</div>
+      <div class="panel-body" id="advisoryPanelBody">
+        <p class="placeholder-text">Advisory output will appear here.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- SCRIPTS — loaded in dependency order -->
+ <script src="inputConfig.js"></script>
+  <script src="inputValidator.js"></script>
+  <script src="inputRenderer.js"></script>
+  <script src="taxConstants.js"></script>
+  <script src="shareSale.js"></script>
+  <script src="assetSale.js"></script>
+  <script src="slumpSale.js"></script>
+  <script src="buyerInputs.js"></script>
+  <script src="buyerTax.js"></script>
+  <script src="buyerNPV.js"></script>
+  <script src="bridgeEngine.js"></script>
+  <script src="bridgeUI.js"></script>
+  <script src="comparator.js"></script>
+  <script src="comparatorUI.js"></script>
+  <script src="riskRules.js"></script>
+  <script src="riskScorer.js"></script>
+  <script src="narrativeTemplates.js"></script>
+  <script src="narrativeEngine.js"></script>
+  <script src="advanceTax.js"></script>
+  <script src="timelineUI.js"></script>
+  <script src="exportEngine.js"></script>
+  <script src="summaryPanel.js"></script>
+  <script src="scenarioManager.js"></script>
+  <script src="sensitivityEngine.js"></script>
+  <script src="warrantyClaims.js"></script>
+  <script src="warrantyUI.js"></script>
+  <script src="holdcoTax.js"></script>
+  <script src="holdcoUI.js"></script>
+  <script src="matCalculator.js"></script>
+  <script src="app.js"></script>
+
+
+</body>
+</html>
